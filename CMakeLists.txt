@@ -20,7 +20,7 @@ include( cmake/common.cmake )
 include( cmake/engine/package.cmake )
 include( cmake/engine/source.cmake )
 
-message( STATUS "CHECKSUM: ${SHARED_FILES}" )
+message( STATUS "CHECKSUM: ${CHECKSUM}" )
 
 message( STATUS "SHARED_FILES: ${SHARED_SRC}" )
 
@@ -34,6 +34,7 @@ if ( BUILD_SERVER )
 	add_library( engine-server SHARED ${SHARED_SRC} )
 	target_version( engine-server ENGINE_SERVER 1 0 0 )
 	set_target_properties( engine-server PROPERTIES OUTPUT_NAME $<LOWER_CASE:${ENGINE_SERVER_NAME}> )
+
 endif ()
 
 # all targets
@@ -41,7 +42,7 @@ get_property( targets DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY BUILDSYSTEM
 foreach ( target ${targets} )
 	get_target_property( target_type ${target} TYPE )
 	if ( target_type STREQUAL "EXECUTABLE" OR target_type STREQUAL "SHARED_LIBRARY" )
-		message( STATUS "Target: ${target} -> ${target_type}" )
+		message( STATUS "Target: ${target} -> ${target_type} " )
 		set_target_properties( ${target} PROPERTIES
 		                       MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>"
 		                       )
@@ -50,9 +51,28 @@ foreach ( target ${targets} )
 		                            PRIVATE "API=__declspec(export)"
 		                            INTERFACE "API=__declspec(import)"
 		                            )
+		
+		if ( target_type STREQUAL "SHARED_LIBRARY" )
+			target_include_directories( engine-server
+			                            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include/oloproxx-engine/
+			                            PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include/
+			                            )
+		endif ()
+		
+		if ( target_type STREQUAL "EXECUTABLE" )
+			set_target_properties( ${target} PROPERTIES RUNTIME_OUTPUT_NAME "${config-engine-client-name}" )
+		endif ()
 	
 	endif ()
 
 
 endforeach ()
 
+if ( BUILD_CLIENT )
+	add_library( oloproxx::engine::client ALIAS engine-client )
+endif ()
+
+
+if ( BUILD_SERVER )
+	add_library( oloproxx::engine::server ALIAS engine-server )
+endif ()

@@ -90,6 +90,16 @@ function ( target_rc_data target DIR FILE_NAME PREFIX )
 	target_sources( ${target} PRIVATE ${PROJECT_BINARY_DIR}/${FILE_NAME}.rc )
 endfunction ()
 
+function ( target_version tget NAME MAJOR MINOR PATCH )
+	target_compile_definitions(
+		${tget} PUBLIC
+		"${NAME}_VERSION_MAJOR=${MAJOR}"
+		"${NAME}_VERSION_MINOR=${MINOR}"
+		"${NAME}_VERSION_PATCH=${PATCH}"
+		"${NAME}_VERSION=(((uint64_t)${MAJOR} << 32) | ((uint64_t)${MINOR} << 16) | ${PATCH})"
+		)
+endfunction ()
+
 # Function to copy resources dynamically
 function ( copy_resource_dynamic SOURCE_DIR TARGET_DIR )
 	set( FULL_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${SOURCE_DIR} )
@@ -113,7 +123,7 @@ function ( add_icon_for_executable target path_to_ico )
 	target_sources( ${target} PRIVATE ${ICON_FILE} )
 endfunction ()
 
-set( CHECKSUM_FILES )
+set( CHECKSUM )
 
 # Function to set source and include files based on multiple base names
 function ( set_src_and_include VAR SRC_DIR INC_DIR )
@@ -169,10 +179,11 @@ function ( set_src_and_include VAR SRC_DIR INC_DIR )
 	endif ()
 	
 	set( ${VAR} ${${VAR}_t} PARENT_SCOPE )
+	set( CHECKSUM ${CHECKSUM} ${${VAR}} )
 	
-	#	message( STATUS "SRC_FILES = ${SRC_FILES}" )
-	#	message( STATUS "INC_FILES = ${INC_FILES}" )
-	#	message( STATUS "******************** Completed checking. ${VAR}_SRC = ${${VAR}_SRC}, ${VAR}_INC = ${${VAR}_INC}" )
+	#        message( STATUS "SRC_FILES = ${SRC_FILES}" )
+	#        message( STATUS "INC_FILES = ${INC_FILES}" )
+	#        message( STATUS "******************** Completed checking. ${VAR}_SRC = ${${VAR}_SRC}, ${VAR}_INC = ${${VAR}_INC}" )
 endfunction ()
 
 # set_src_and_include(SHARED_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/shared ${CMAKE_CURRENT_SOURCE_DIR}/include/oloproxx-engine
