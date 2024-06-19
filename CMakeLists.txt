@@ -60,9 +60,8 @@ foreach ( target ${targets} )
 		endif ()
 		
 		if ( target_type STREQUAL "EXECUTABLE" )
-			set_target_properties( ${target} PROPERTIES RUNTIME_OUTPUT_NAME "${config-engine-client-name}" )
+		
 		endif ()
-	
 	endif ()
 
 

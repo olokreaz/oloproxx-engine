@@ -23,11 +23,11 @@ set( config-engine-server-name oloproxx-engine-server )
 
 if ( ${WIN32} )
 	set( PLATFORM "windows" )
-	set( ENGINE_PLATFORM "windows" PARENT_SCOPE CACHE STRING "Platform" FORCE )
 	
 	set( BUILD_CLIENT ON )
 	set( BUILD_SERVER ON )
 	
+	set( ENGINE_PLATFORM "windows" PARENT_SCOPE CACHE STRING "Platform" FORCE )
 	set( ENGINE_TARGET_CLIENT ON PARENT_SCOPE CACHE STRING "Build the client" FORCE )
 	set( ENGINE_TARGET_SERVER ON PARENT_SCOPE CACHE STRING "Build the server" FORCE )
 

@@ -15,6 +15,7 @@ if ( ${WIN32} )
 		/FS
 		)
 	
+	set( CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" )
 	
 	#linker options
 	add_link_options(
@@ -88,8 +89,6 @@ if ( ${CMAKE_BUILD_TYPE} STREQUAL "Debug" )
 else ()
 	add_compile_definitions( NDEBUG
 	                         RELEASE
-	                         NDEV
-	                         PROD
 	                         )
 	message( "Release build" )
 endif ()
@@ -99,4 +98,3 @@ if ( ${DEV} )
 else ()
 	add_compile_definitions( NDEV PROD )
 endif ()
-
