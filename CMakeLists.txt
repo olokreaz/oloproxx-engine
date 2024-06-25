@@ -33,8 +33,8 @@ endif ()
 if ( BUILD_SERVER )
 	add_library( engine-server SHARED ${SHARED_SRC} )
 	target_version( engine-server ENGINE_SERVER 1 0 0 )
+	target_force_include( engine-server ${CMAKE_CURRENT_SOURCE_DIR}/include/oloproxx-engine/base/config.hpp )
 	set_target_properties( engine-server PROPERTIES OUTPUT_NAME $<LOWER_CASE:${ENGINE_SERVER_NAME}> )
-
 endif ()
 
 # all targets

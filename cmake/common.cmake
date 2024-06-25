@@ -186,6 +186,13 @@ function ( set_src_and_include VAR SRC_DIR INC_DIR )
 	#        message( STATUS "******************** Completed checking. ${VAR}_SRC = ${${VAR}_SRC}, ${VAR}_INC = ${${VAR}_INC}" )
 endfunction ()
 
+function ( target_force_include tgt file ) #...
+	message( STATUS "${tgt} force include ${file}" )
+	target_compile_options( ${tgt} PRIVATE
+	                        /FI${file}
+	                        )
+endfunction ()
+
 # set_src_and_include(SHARED_FILE ${CMAKE_CURRENT_SOURCE_DIR}/src/shared ${CMAKE_CURRENT_SOURCE_DIR}/include/oloproxx-engine
 #                    filesystem
 #                    )

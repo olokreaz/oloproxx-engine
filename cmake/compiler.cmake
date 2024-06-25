@@ -11,8 +11,12 @@ if ( ${WIN32} )
 		/GA
 		/wd4996
 		/arch:AVX
-		/openmp
 		/FS
+		
+		/await
+		#/openmp
+		/openmp:experimental
+		
 		)
 	
 	set( CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" )
