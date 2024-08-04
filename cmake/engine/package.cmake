@@ -22,6 +22,9 @@ find_package( libassert CONFIG REQUIRED )
 find_package( sigc++-3 CONFIG REQUIRED )
 find_package( leveldb CONFIG REQUIRED )
 
+find_package( FFMPEG REQUIRED )
+include_directories( PRIVATE ${FFMPEG_INCLUDE_DIRS} )
+
 
 if ( ${WIN32} )
 	#[[ engine::client ]]
@@ -29,7 +32,6 @@ if ( ${WIN32} )
 	find_package( glfw3 REQUIRED )
 	find_package( unofficial-gainput CONFIG REQUIRED )
 	#[[ game::client ]]
-
 endif ()
 
 #[[ engine::server ]]
@@ -74,6 +76,7 @@ set( ENGINE_CLIENT_LIBS
      glfw
      phonon
      unofficial::gainput::gainput
+     ${FFMPEG_LIBRARY_DIRS}
      )
 
 set( ENGINE_SERVER_LIBS
