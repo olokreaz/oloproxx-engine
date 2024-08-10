@@ -13,7 +13,7 @@ if ( ${WIN32} )
 		/arch:AVX
 		/FS
 		
-		/await
+		/await:strict
 		#/openmp
 		/openmp:experimental
 		
