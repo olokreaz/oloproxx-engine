@@ -20,6 +20,8 @@ include( cmake/common.cmake )
 include( cmake/engine/package.cmake )
 include( cmake/engine/source.cmake )
 
+include( cmake/configurator.cmake )
+
 message( STATUS "CHECKSUM: ${CHECKSUM}" )
 
 message( STATUS "SHARED_FILES: ${SHARED_SRC}" )
