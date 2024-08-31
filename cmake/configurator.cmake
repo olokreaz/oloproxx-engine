@@ -82,7 +82,13 @@
 		
 		set( OUT "${CMAKE_CURRENT_BINARY_DIR}/cthpp/${CONFIG_TARGET}" )
 		
-		execute_process( COMMAND ${CTHPP} --config=${CONFIG_CONFIG} --namespace=${CONFIG_NAMESPACE} --cmake-target-current-build=${CONFIG_TARGET} --working=${CONFIG_WORKING_DIR} ${TYPE_FLAG} ${MODE_FLAG} --output=${OUT}/${CONFIG_OUTPUT} --rewrite RESULT_VARIABLE result OUTPUT_VARIABLE output )
+		
+		if ( WIN32 )
+			execute_process( COMMAND ${CTHPP} --config=${CONFIG_CONFIG} --namespace=${CONFIG_NAMESPACE} --cmake-target-current-build=${CONFIG_TARGET} --working=${CONFIG_WORKING_DIR} ${TYPE_FLAG} ${MODE_FLAG} --output=${OUT}/${CONFIG_OUTPUT} --rewrite RESULT_VARIABLE result OUTPUT_VARIABLE output )
+		else ()
+			execute_process( COMMAND wine ${CTHPP} --config=${CONFIG_CONFIG} --namespace=${CONFIG_NAMESPACE} --cmake-target-current-build=${CONFIG_TARGET} --working=${CONFIG_WORKING_DIR} ${TYPE_FLAG} ${MODE_FLAG} --output=${OUT}/${CONFIG_OUTPUT} --rewrite RESULT_VARIABLE result OUTPUT_VARIABLE output )
+		endif ()
+		
 		
 		target_include_directories( ${CONFIG_TARGET} PRIVATE ${OUT} )
 		
