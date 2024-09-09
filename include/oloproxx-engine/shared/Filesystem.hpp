@@ -12,7 +12,27 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-#pragma once
+//
+// Created by @olokreaz on 02.09.2024.
+//
 
-// Best-macros
-#define NODISCARD_MSG(_msg) [[nodiscard(#_msg)]]
+#ifndef FILESYSTEM_HPP
+#define FILESYSTEM_HPP
+
+#include <string>
+#include <unordered_map>
+
+namespace systems::filesystem {
+	class FileHandler
+	{
+		//
+	};
+
+	class Filesystem
+	{
+		//
+	};
+
+}    // namespace system::filesystem
+
+#endif	  //FILESYSTEM_HPP

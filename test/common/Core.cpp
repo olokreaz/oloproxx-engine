@@ -12,7 +12,16 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-#pragma once
+//
+// Created by @olokreaz on 02.09.2024.
+//
 
-// Best-macros
-#define NODISCARD_MSG(_msg) [[nodiscard(#_msg)]]
+#include <gtest/gtest.h>
+#include <oloproxx-engine/base/kernel.hpp>
+
+class TestCore:
+{};
+
+TEST( CORE, ICore_Name )
+{
+}

@@ -90,15 +90,6 @@ function ( target_rc_data target DIR FILE_NAME PREFIX )
 	target_sources( ${target} PRIVATE ${PROJECT_BINARY_DIR}/${FILE_NAME}.rc )
 endfunction ()
 
-function ( target_version tget NAME MAJOR MINOR PATCH )
-	target_compile_definitions(
-		${tget} PUBLIC
-		"${NAME}_VERSION_MAJOR=${MAJOR}"
-		"${NAME}_VERSION_MINOR=${MINOR}"
-		"${NAME}_VERSION_PATCH=${PATCH}"
-		"${NAME}_VERSION=(((uint64_t)${MAJOR} << 32) | ((uint64_t)${MINOR} << 16) | ${PATCH})"
-		)
-endfunction ()
 
 # Function to copy resources dynamically
 function ( copy_resource_dynamic SOURCE_DIR TARGET_DIR )
@@ -126,6 +117,22 @@ endfunction ()
 set( CHECKSUM )
 
 # Function to set source and include files based on multiple base names
+#
+# This function searches for source and include files in specified directories
+# based on provided base names and extensions. It sets the found files to the
+# specified variable and updates the CHECKSUM variable.
+#
+# Parameters:
+# - VAR: The variable to set with the found files.
+# - SRC_DIR: The directory to search for source files.
+# - INC_DIR: The directory to search for include files.
+# - ARGN: The list of base names to search for.
+#
+# The function sets the following variables in the parent scope:
+# - VAR_SRC: List of found source files.
+# - VAR_INC: List of found include files.
+# - VAR: Combined list of found source and include files.
+# - CHECKSUM: Updated list of found files.
 function ( set_src_and_include VAR SRC_DIR INC_DIR )
 	# Initialize lists for source and include files
 	set( SRC_FILES )

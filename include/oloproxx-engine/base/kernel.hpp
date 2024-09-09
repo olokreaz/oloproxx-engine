@@ -1,24 +1,26 @@
+//    Copyright 2024 olokreZ ( Долгополов Василий Васильевич | Dolgopolov Vasily Vasilievich )
+//
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+//
+//        http://www.apache.org/licenses/LICENSE-2.0
+//
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
 #pragma once
 
-#define MACRO_INTERFACE_NAME( name )                                                                                                                 \
-public:                                                                                                                                              \
-	static constexpr const char* InterfaceName( ) noexcept                                                                                       \
-	{                                                                                                                                            \
-		return #name;                                                                                                                        \
-	}                                                                                                                                            \
-                                                                                                                                                     \
-private:
+#define LOGT( ... ) SPDLOG_LOGGER_TRACE( this->m_logger, __VA_ARGS__ );
+#define LOGI( ... ) SPDLOG_LOGGER_INFO( this->m_logger, __VA_ARGS__ );
+#define LOGD( ... ) SPDLOG_LOGGER_DEBUG( this->m_logger, __VA_ARGS__ );
+#define LOGW( ... ) SPDLOG_LOGGER_WARN( this->m_logger, __VA_ARGS__ );
+#define LOGE( ... ) SPDLOG_LOGGER_ERROR( this->m_logger, __VA_ARGS__ );
+#define LOGC( ... ) SPDLOG_LOGGER_CRITICAL( this->m_logger, __VA_ARGS__ );
 
-#include <string_view>
+namespace base {
 
-namespace engine::kernel
-{
-	template< class T > constexpr bool	       InterfaceEnable = false;
-	template< class T > constexpr std::string_view InterfaceName   = "None";
-} // namespace engine::kernel
-
-#define MACRO_CREATE_API_CLASS( classname, ... )                                                                                                     \
-	class classname;                                                                                                                             \
-	template<> constexpr bool	      engine::kernel::InterfaceEnable< class classname > = true;                                             \
-	template<> constexpr std::string_view engine::kernel::InterfaceName< class classname >	 = #classname;                                       \
-	class API			      classname
+}    // namespace base
